@@ -12,6 +12,7 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.switch_callback = switch_callback
         self.setWindowTitle("EpochNexus")
+        self.setMinimumSize(800, 600) 
         self.setStyleSheet(""" QWidget { background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #e0f7fa, stop:1 #80deea); } """)
         
         # Create central widget and set layout
