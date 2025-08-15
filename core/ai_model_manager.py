@@ -9,12 +9,10 @@ class AIModelManager:
         self.dataframe = None
 
     def load_data(self, file_path):
-        """Load dataset from a CSV or Excel file."""
         if not os.path.exists(file_path):
             raise FileNotFoundError(f"{file_path} not found.")
         
         try:
-            # Check file extension and load accordingly
             file_extension = os.path.splitext(file_path)[1].lower()
             
             if file_extension == '.csv':
@@ -33,13 +31,11 @@ class AIModelManager:
             raise Exception(f"Error loading file: {str(e)}")
 
     def get_data_preview(self, rows=5):
-        """Get preview of the loaded dataset."""
         if self.dataframe is None:
             return None
         return self.dataframe.head(rows)
 
     def get_dataset_info(self):
-        """Get basic information about the loaded dataset."""
         if self.dataframe is None:
             return None
         

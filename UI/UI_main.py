@@ -51,10 +51,9 @@ class MainWindow(QMainWindow):
             }
         """)
         
-        # Initialize AI Model Manager
         self.ai_manager = AIModelManager()
         
-        # Create central widget and set layout
+        
         central_widget = QWidget()
         self.setCentralWidget(central_widget)
         
@@ -62,16 +61,16 @@ class MainWindow(QMainWindow):
         layout.setContentsMargins(40, 40, 40, 20)
         layout.setSpacing(20)
 
-        # Title
+        
         title = QLabel("Welcome to EpochNexus")
         title.setStyleSheet("font-size: 30px; font-weight: bold; color: #006064;")
         layout.addWidget(title, alignment=Qt.AlignCenter)
 
-        # File Selection Section
+        
         file_group = QGroupBox("Dataset Selection")
         file_layout = QVBoxLayout()
         
-        # File picker button and path display
+        
         file_button_layout = QHBoxLayout()
         self.select_file_btn = QPushButton("Select CSV/Excel File")
         self.select_file_btn.clicked.connect(self.select_file)
@@ -84,16 +83,16 @@ class MainWindow(QMainWindow):
         file_group.setLayout(file_layout)
         layout.addWidget(file_group)
 
-        # Data Preview Section
+        
         preview_group = QGroupBox("Data Preview")
         preview_layout = QVBoxLayout()
         
-        # Preview table
+        
         self.preview_table = QTableWidget()
         self.preview_table.setMaximumHeight(200)
         preview_layout.addWidget(self.preview_table)
         
-        # Dataset info
+        
         self.dataset_info_label = QLabel("No dataset loaded")
         self.dataset_info_label.setStyleSheet("color: #666; font-style: italic; padding: 5px;")
         preview_layout.addWidget(self.dataset_info_label)
@@ -101,7 +100,7 @@ class MainWindow(QMainWindow):
         preview_group.setLayout(preview_layout)
         layout.addWidget(preview_group)
 
-        # Status Section
+        
         status_group = QGroupBox("Status")
         status_layout = QVBoxLayout()
         
@@ -129,22 +128,18 @@ class MainWindow(QMainWindow):
     def load_dataset(self, file_path):
         """Load the selected dataset and display preview."""
         try:
-            # Update UI to show loading
+         
             self.status_label.setText("Loading dataset...")
             self.file_path_label.setText(f"File: {os.path.basename(file_path)}")
             
-            # Load data using AI Model Manager
             self.ai_manager.load_data(file_path)
             
-            # Get and display preview
             preview_data = self.ai_manager.get_data_preview()
             self.display_preview(preview_data)
             
-            # Get and display dataset info
             dataset_info = self.ai_manager.get_dataset_info()
             self.display_dataset_info(dataset_info)
             
-            # Update status
             self.status_label.setText("Dataset loaded successfully!")
             self.status_label.setStyleSheet("color: #2e7d32; font-weight: bold; padding: 5px;")
             
@@ -158,21 +153,17 @@ class MainWindow(QMainWindow):
         if preview_data is None:
             return
         
-        # Set table dimensions
         self.preview_table.setRowCount(len(preview_data))
         self.preview_table.setColumnCount(len(preview_data.columns))
         
-        # Set headers
         self.preview_table.setHorizontalHeaderLabels(preview_data.columns)
         self.preview_table.setVerticalHeaderLabels([f"Row {i+1}" for i in range(len(preview_data))])
         
-        # Populate table with data
         for row_idx, (_, row_data) in enumerate(preview_data.iterrows()):
             for col_idx, value in enumerate(row_data):
                 item = QTableWidgetItem(str(value))
                 self.preview_table.setItem(row_idx, col_idx, item)
         
-        # Resize columns to content
         self.preview_table.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeToContents)
 
     def display_dataset_info(self, dataset_info):
