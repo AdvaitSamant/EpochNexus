@@ -180,3 +180,13 @@ class AIModelManager:
         plt.savefig(save_path)
         plt.close()
         print(f"Learning curve saved to {save_path}")
+    
+    def list_available_models(self, directory="models", extension=".pkl"):
+        """List all saved model files in a directory."""
+        if not os.path.exists(directory):
+            print(f"Directory '{directory}' does not exist.")
+            return []
+        
+        models = [f for f in os.listdir(directory) if f.endswith(extension)]
+        print(f"Found {len(models)} saved models in '{directory}': {models}")
+        return models
